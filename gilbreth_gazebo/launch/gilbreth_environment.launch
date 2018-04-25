@@ -22,7 +22,10 @@
   </include>
 
   <!-- Load the URDF into the ROS Parameter Server -->
-  <include file="$(find gilbreth_moveit_config)/launch/move_group.launch"/>
+  <remap from="/robot_description_semantic" to="/robot_system/robot_description_semantic"/>
+  <include ns="robot_system" file="$(find gilbreth_moveit_config)/launch/move_group.launch"/>
+  <remap from="/robot_description_semantic" to="/robot_system/robot_description_semantic"/>
+  <include ns="robot_place" file="$(find moveit_pickplace)/launch/move_group.launch"/>
   <include file="$(find gilbreth_support)/launch/load_gilbreth.launch"/>
 
   <!-- Spawn the URDF objects into Gazebo -->
@@ -34,7 +37,7 @@
   </node>
 
   <rosparam command="load" file="$(find gilbreth_gazebo)/config/joint_state_controller.yaml"/>
-  <rosparam command="load" file="$(find gilbreth_gazebo)/config/robot_rail_controller.yaml"/>
+  <rosparam command="load" file="$(find gilbreth_gazebo)/config/robot_rail_controller.yaml" ns="robot_system" />
   <node name="gilbreth_controller_spawner" pkg="controller_manager" type="spawner"
     args="joint_state_controller robot_rail_controller"/>
 

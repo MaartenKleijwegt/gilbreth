@@ -1,8 +1,12 @@
 <?xml version="1.0" ?>
 <robot name="gilbreth" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
+  <!-- world -->
+  <link name="world"/>
   <!-- robot system -->
-  <xacro:include filename="$(find gilbreth_support)/urdf/robot_system/robot_system.xacro"/>
+  <xacro:include filename="$(find gilbreth_support)/urdf/robot_system/robot_system.xacro" ns="robot_system"/>
+  <xacro:include filename="$(find gilbreth_support)/urdf/robot_system/robot_place.xacro" ns="robot_place"/>
+
 
   <!-- bins -->
   <xacro:include filename="$(find gilbreth_support)/urdf/bin/bin.urdf.xacro"/>
@@ -27,6 +31,18 @@
   <joint name="workcell_to_world" type="fixed">
     <parent link="world" />
     <child link="world_interface" />
+  </joint>
+
+  <!-- robot system link to world -->
+  <joint name="$linear_actuator_world_joint" type="fixed">
+    <parent link="world" />
+    <child link="linear_actuator_base_link" />
+    <origin xyz="0.4 0.0 0.9" rpy="0 0 0" />
+  </joint>
+  <joint name="robot_place_world_joint" type="fixed">
+    <parent link="world" />
+    <child link="robot_place_base_block" />
+    <origin xyz="0.4 0.0 0.9" rpy="0 0 0" />
   </joint>
 
   <!-- a break_beam type sensor in the frame break_beam_frame -->

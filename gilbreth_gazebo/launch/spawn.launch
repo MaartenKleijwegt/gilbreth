@@ -2,6 +2,7 @@
 <launch>
   <arg name="workcell" value="workcell_"/>
   <arg name="robot_system" value="robot_system_"/>
+  <arg name="robot_place" value="robot_place_"/>
   <arg name="vacuum_gripper" value="vacuum_gripper_"/>
   <arg name="depth_camera" value="depth_camera_"/>
   <arg name="break_beam" value="break_beam_"/>
@@ -18,6 +19,9 @@
 
   <param name="$(arg robot_system)description"
     command="$(find xacro)/xacro --inorder '$(find gilbreth_support)/urdf/robot_system/robot_system.xacro'"/>
+
+  <param name="$(arg robot_place)description"
+    command="$(find xacro)/xacro --inorder '$(find gilbreth_support)/urdf/robot_system/robot_place.xacro'"/>
 
   <param name="$(arg depth_camera)description"
     command="$(find xacro)/xacro --inorder '$(find gilbreth_support)/urdf/depth_camera/depth_camera.xacro' prefix:=$(arg depth_camera)"/>
@@ -47,6 +51,9 @@
 
   <node name="$(arg robot_system)spawner" pkg="gazebo_ros" type="spawn_model" output="screen"
     args="-urdf -model $(arg robot_system) -param $(arg robot_system)description"/>
+
+  <node name="$(arg robot_place)spawner" pkg="gazebo_ros" type="spawn_model" output="screen"
+    args="-urdf -model $(arg robot_place) -param $(arg robot_place)description"/>
 
   <node name="$(arg depth_camera)spawner" pkg="gazebo_ros" type="spawn_model" output="screen"
     args="-urdf -model $(arg depth_camera) -param $(arg depth_camera)description"/>
